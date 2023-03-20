@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.AbTypeMapper">
+
+    <select id="list" resultType="com.dryyzx.backend.entity.AbType">
+        select * from nursing.abnormal_type <where>
+        <if test="title != null and title != ''">
+            title = #{title}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </where>
+    </select>
+
+    <insert id="insert">
+        insert into nursing.abnormal_type (ab_type_id, state, status, title, publish_time)
+        values (#{abTypeId}, #{state}, #{status}, #{title}, #{publishTime})
+    </insert>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.AbType">
+        select * from nursing.abnormal_type where ab_type_id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from nursing.abnormal_type where ab_type_id = #{id}
+    </delete>
+
+    <update id="update">
+        update nursing.abnormal_type set status = #{status} where ab_type_id = #{abTypeId}
+    </update>
+
+    <select id="valid" resultType="com.dryyzx.backend.entity.AbType">
+        select * from nursing.abnormal_type where status = 1
+    </select>
+
+</mapper>

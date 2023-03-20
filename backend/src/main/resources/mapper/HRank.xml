@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.HRankMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.HRank">
+        select * from healthRank
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.HRank">
+        select * from healthRank
+
+    </select>
+
+    <insert id="insert">
+        INSERT INTO healthRank(`performance`,`describe`,`state`)
+        values (#{performance},#{describe},#{state});
+    </insert>
+
+    <update id="update">
+        update healthRank
+        set `performance` =#{performance},`describe`=#{describe},`state`=#{state}
+        where `rankid` = #{rankid}
+    </update>
+    <delete id="deleteById">
+        delete from healthRank where `rankid` = #{rankid}
+    </delete>
+</mapper>

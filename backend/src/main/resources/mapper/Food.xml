@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.FoodMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.Food">
+        select * from food
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.Food">
+        select * from food
+        <where>
+            <if test="name != null and name != ''">
+                and name like "%"#{name}"%"
+            </if>
+        </where>
+        order by foodid desc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.Food">
+        select * from food where foodid = #{foodid}
+    </select>
+
+    <insert id="insert">
+        insert into food (foodid, name, protein,
+                          cho, heat, fat, price
+        )
+        values (#{foodid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{protein,jdbcType=DOUBLE},
+                #{cho,jdbcType=DOUBLE}, #{heat,jdbcType=DOUBLE}, #{fat,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}
+               )
+    </insert>
+
+    <update id="update">
+        update food
+        set name = #{name,jdbcType=VARCHAR},
+            protein = #{protein,jdbcType=DOUBLE},
+            cho = #{cho,jdbcType=DOUBLE},
+            heat = #{heat,jdbcType=DOUBLE},
+            fat = #{fat,jdbcType=DOUBLE},
+            price = #{price,jdbcType=DOUBLE}
+        where foodid = #{foodid,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteById">
+        delete from food where foodid = #{foodid}
+    </delete>
+</mapper>

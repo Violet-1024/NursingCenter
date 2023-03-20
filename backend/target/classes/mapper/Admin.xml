@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.AdminMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.Admin">
+        select *
+        from admin
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.Admin">
+        select * from admin
+        <where>
+            <if test="username != null and username != ''">
+                username like concat('%', #{username}, '%')
+            </if>
+        </where>
+        order by id asc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.Admin">
+        select *
+        from admin
+        where id = #{id}
+    </select>
+    <select id="getByUsernameAndPassword" resultType="com.dryyzx.backend.entity.Admin">
+        select *
+        from admin
+        where username = #{username}
+          and password = #{password}
+    </select>
+
+    <insert id="save">
+        INSERT INTO admin(username, password, phone)
+        values (#{username}, #{password}, #{phone});
+    </insert>
+
+    <update id="updateById">
+        update admin
+        set username = #{username},
+            password = #{password},
+            phone    = #{phone}
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete
+        from admin
+        where id = #{id}
+    </delete>
+</mapper>

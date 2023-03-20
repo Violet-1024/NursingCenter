@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.NursingRecordMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.NursingRecord">
+        select * from nursingrecord
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.NursingRecord">
+        select * from nursingrecord
+        <where>
+            <if test="recordID != null and recordID != ''">
+                recordID like concat('%', #{ recordID }, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and status  like concat('%', #{ status }, '%')
+            </if>
+            <if test="id != null and id != ''">
+                    and id  like concat('%', #{ id } , '%')
+            </if>
+        </where>
+        order by recordID asc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.NursingRecord">
+        select * from nursingrecord where recordID = #{recordID}
+    </select>
+    <insert id="save">
+        INSERT INTO nursingrecord(recordID,eid,id,status,orderTime,nursingName)
+        values (#{orderID}, #{eid},#{id},#{status},#{orderTime},#{nursingName});
+    </insert>
+    <update id="updateById">
+        update nursingrecord set recordID = #{recordID}, eid = #{eid}, id = #{id},
+                    nursingName = #{nursingName},   status = #{status}, where recordID = #{recordID}
+    </update>
+    <!--    <insert id="save">-->
+    <!--        INSERT INTO reserveplan(planID,planName,planType,planOwnerShip,state,operator,rescuePrecautions,responsibleUnit,newTime,accentType)-->
+    <!--        values (#{planID}, #{planName},#{planType},#{planOwnerShip},#{state},#{operator},#{rescuePrecautions},#{responsibleUnit},#{newTime},#{accentType});-->
+    <!--    </insert>-->
+
+    <!--    <update id="updateById">-->
+    <!--        update reserveplan set planID = #{planID}, planName = #{planName}, planType = #{planType}, planOwnerShip = #{planOwnerShip},-->
+    <!--                               state = #{state}, operator = #{operator}, rescuePrecautions = #{rescuePrecautions},-->
+    <!--                               responsibleUnit = #{responsibleUnit},newTime = #{newTime}, accentType =  #{accentType} where planID = #{planID}-->
+    <!--    </update>-->
+
+    <delete id="deleteById">
+        delete from nursingrecord where recordID = #{recordID}
+    </delete>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.OrderMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.Order">
+        select * from orderfood
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.Order">
+        select * from orderfood
+        <where>
+            <if test="orderID != null and orderID != ''">
+                orderID like concat('%', #{ orderID }, '%')
+            </if>
+<!--            <if test="orderTime != null and orderTime != ''">-->
+<!--                and orderTime  like concat('%', #{orderTime}, '%')-->
+<!--            </if>-->
+            <if test="id != null and id != ''">
+                and id  like concat('%', #{ id } , '%')
+            </if>
+        </where>
+        order by orderID asc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.Order">
+        select * from orderfood where orderID = #{orderID}
+    </select>
+    <insert id="save">
+        INSERT INTO orderfood(orderID,foodid,id,status,orderTime)
+        values (#{orderID}, #{foodid},#{id},#{status},#{orderTime});
+    </insert>
+    <update id="updateById">
+        update orderfood set status = #{status} where orderID = #{orderID}
+    </update>
+    <!--    <insert id="save">-->
+    <!--        INSERT INTO reserveplan(planID,planName,planType,planOwnerShip,state,operator,rescuePrecautions,responsibleUnit,newTime,accentType)-->
+    <!--        values (#{planID}, #{planName},#{planType},#{planOwnerShip},#{state},#{operator},#{rescuePrecautions},#{responsibleUnit},#{newTime},#{accentType});-->
+    <!--    </insert>-->
+
+    <!--    <update id="updateById">-->
+    <!--        update reserveplan set planID = #{planID}, planName = #{planName}, planType = #{planType}, planOwnerShip = #{planOwnerShip},-->
+    <!--                               state = #{state}, operator = #{operator}, rescuePrecautions = #{rescuePrecautions},-->
+    <!--                               responsibleUnit = #{responsibleUnit},newTime = #{newTime}, accentType =  #{accentType} where planID = #{planID}-->
+    <!--    </update>-->
+
+    <delete id="deleteById">
+        delete from orderfood where orderID = #{orderID}
+    </delete>
+</mapper>

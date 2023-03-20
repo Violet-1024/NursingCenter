@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.EvaMapper">
+    <select id="query" resultType="com.dryyzx.backend.entity.Evaluate">
+        select * from nursing.evaluation <where>
+            <if test="evaId != null and evaId != ''">
+                eva_id = #{evaId}
+            </if>
+            <if test="nurse != null and nurse != ''">
+                and nurse = #{nurse}
+            </if>
+            <if test="servTime != null">
+                and unix_timestamp(serv_time) > unix_timestamp(#{servTime})
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+        </where>
+    </select>
+
+    <select id="detail" resultType="com.dryyzx.backend.entity.Evaluate">
+        select * from nursing.evaluation where eva_id = #{id}
+    </select>
+
+    <delete id="cut">
+        delete from nursing.evaluation where eva_id = #{id}
+    </delete>
+
+
+</mapper>

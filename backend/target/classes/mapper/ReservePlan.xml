@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.ReservePlanMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.ReservePlan">
+        select * from reserveplan
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.ReservePlan">
+        select * from reserveplan
+        <where>
+            <if test="planName != null and planName != ''">
+                planName like concat('%', #{ planName }, '%')
+            </if>
+            <if test="planID != null and planID != ''">
+                and planID  like concat('%', #{ planID }, '%')
+            </if>
+            <if test="accentType != null and accentType != ''">
+                and accentType  like concat('%', #{accentType}, '%')
+            </if>
+        </where>
+        order by planID asc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.ReservePlan">
+        select * from reserveplan where planID = #{planID}
+    </select>
+    <insert id="save">
+        INSERT INTO reserveplan(planID,planName,planType,state,accentType,newTime)
+        values (#{planID}, #{planName},#{planType},#{state},#{accentType},#{newTime});
+    </insert>
+    <update id="updateById">
+        update reserveplan set planID = #{planID}, planName = #{planName}, planType = #{planType},
+                               state = #{state},accentType =  #{accentType} where planID = #{planID}
+    </update>
+<!--    <insert id="save">-->
+<!--        INSERT INTO reserveplan(planID,planName,planType,planOwnerShip,state,operator,rescuePrecautions,responsibleUnit,newTime,accentType)-->
+<!--        values (#{planID}, #{planName},#{planType},#{planOwnerShip},#{state},#{operator},#{rescuePrecautions},#{responsibleUnit},#{newTime},#{accentType});-->
+<!--    </insert>-->
+
+<!--    <update id="updateById">-->
+<!--        update reserveplan set planID = #{planID}, planName = #{planName}, planType = #{planType}, planOwnerShip = #{planOwnerShip},-->
+<!--                               state = #{state}, operator = #{operator}, rescuePrecautions = #{rescuePrecautions},-->
+<!--                               responsibleUnit = #{responsibleUnit},newTime = #{newTime}, accentType =  #{accentType} where planID = #{planID}-->
+<!--    </update>-->
+
+    <delete id="deleteById">
+        delete from reserveplan where planID = #{planID}
+    </delete>
+</mapper>

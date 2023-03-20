@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.HDatasMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.HDatas">
+        select * from healthdatas
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.HDatas">
+        select * from healthdatas
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{ name }, '%')
+            </if>
+        </where>
+        order by customerid desc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.HDatas">
+        select * from healthdatas where customerid = #{customerid}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO healthdatas(name ,sex,age,performance,rate,sugar,oxygen)
+        values (#{name}, #{sex},#{age},#{performance},#{rate},#{sugar},#{oxygen});
+    </insert>
+
+    <update id="update">
+        update healthdatas set name = #{name}, sex = #{sex}, age = #{age}, performance = #{performance},
+                            rate = #{rate}, sugar = #{sugar},
+                            oxygen = #{oxygen}  where customerid = #{customerid}
+    </update>
+    <delete id="deleteById">
+        delete from healthdatas where customerid = #{customerid}
+    </delete>
+</mapper>

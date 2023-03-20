@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.BedMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.Bed">
+        select * from bed
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.Bed">
+        select * from bed
+        <where>
+            <if test="bedID != null and bedID != ''">
+                bedID like concat('%', #{ bedID }, '%')
+            </if>
+            <if test="roomID != null and roomID != ''">
+                and roomID  like concat('%', #{ roomID }, '%')
+            </if>
+            <if test="bedLevel != null and bedLevel != ''">
+                and bedLevel  like concat('%', #{ bedLevel }, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and status like concat('%', #{status}, '%')
+            </if>
+        </where>
+        order by bedID asc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.Bed">
+        select * from bed where bedID = #{bedID}
+    </select>
+
+    <insert id="save">
+        INSERT INTO bed(bedID,staffID,roomID,bedLevel,status,createDate )
+        values (#{bedID}, #{staffID},#{roomID},#{bedLevel},#{status},#{createDate});
+    </insert>
+
+    <update id="updateById">
+        update bed set staffID = #{staffID}, roomID = #{roomID}, bedLevel = #{bedLevel},
+                       status = #{status}, createDate=#{createDate} where bedID = #{bedID}
+    </update>
+
+
+
+    <delete id="deleteById">
+        delete from bed where bedID = #{bedID}
+    </delete>
+</mapper>

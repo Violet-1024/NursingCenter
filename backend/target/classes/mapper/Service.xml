@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.ServiceMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.Service">
+        select * from service
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.Service">
+        select * from service
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{ name }, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and status  like concat('%', #{status}, '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO service(name,applicationtime,handlingtime,reason,status,plan)
+        values (#{name}, #{applicationtime},#{handlingtime},#{reason},#{status},#{plan});
+    </insert>
+
+    <update id="update">
+        update service
+        set handlingtime=#{handlingtime},status=#{status},plan=#{plan}
+        where serviceid = #{serviceid}
+    </update>
+    <delete id="deleteById">
+        delete from service where serviceid = #{serviceid}
+    </delete>
+</mapper>

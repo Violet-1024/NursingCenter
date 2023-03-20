@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.OutingMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.Outing">
+        select * from outing
+    </select>
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.Outing">
+        select * from outing
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{ name }, '%')
+            </if>
+            <if test="companion != null and companion != ''">
+                and companion  like concat('%', #{companion}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and status  like concat('%', #{status}, '%')
+            </if>
+        </where>
+    </select>
+    <select id="getById" resultType="com.dryyzx.backend.entity.Outing">
+        select * from outing where outingid = #{outingid}
+    </select>
+    <update id="updateById">
+        update outing set status = #{status}, dealtime = #{dealtime} where outingid = #{outingid}
+    </update>
+</mapper>

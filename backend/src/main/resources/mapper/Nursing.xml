@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryyzx.backend.mapper.NursingMapper">
+    <select id="list" resultType="com.dryyzx.backend.entity.Nursing">
+        select * from nursingcontent
+    </select>
+
+    <select id="listByCondition" resultType="com.dryyzx.backend.entity.Nursing">
+        select * from nursingcontent
+        <where>
+            <if test="nursingID != null and nursingID != ''">
+                nursingID like concat('%', #{ nursingID }, '%')
+            </if>
+            <if test="nursingLevel != null and nursingLevel != ''">
+                and nursingLevel  like concat('%', #{nursingLevel}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and status  like concat('%', #{status}, '%')
+            </if>
+        </where>
+        order by nursingID asc
+    </select>
+
+    <select id="getById" resultType="com.dryyzx.backend.entity.Nursing">
+        select * from nursingcontent where nursingID = #{nursingID}
+    </select>
+
+    <insert id="save">
+        INSERT INTO nursingcontent(nursingID,nursingLevel,nursingName,price,introduce,status)
+        values (#{nursingID},#{nursingLevel},#{nursingName},#{price},#{introduce},#{status});
+    </insert>
+
+    <update id="updateById">
+        update nursingcontent set nursingLevel = #{nursingLevel},nursingName = #{nursingName},
+                                  price = #{price},status = #{status},introduce = #{introduce}
+                                where nursingID = #{nursingID}
+    </update>
+
+    <delete id="deleteById">
+        delete from nursingcontent where nursingID = #{nursingID}
+    </delete>
+</mapper>
